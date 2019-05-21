@@ -1,59 +1,19 @@
 version: '3'
 services:
-    phlex:
-        container_name: phlex
-        image: digitalhigh/phlex
-        restart: unless-stopped
-        ports:
-            - "5666:5666"
-            - "5667:5447"
-            - "9000:9000"
-        volumes:
-            - "./plexServerConfig/phlex/config:/config"
-        environment:
-            - TZ="America/Chicago"
-            - PGID=1001
-            - PUID=1001
     plex:
         container_name: plex
         image: linuxserver/plex
         restart: unless-stopped
         network_mode: host
         volumes:
-            - ./plexServerConfig/plex/config:/config
-            - /media/tv_shows/Videos/Tv Shows:/data/tvshows
+            - /home/plex/plexmediaserver/config:/config
+            - "/media/tvshows/Videos/Tv Shows:/data/tvshows"
             - /media/movies/Movies:/data/movies
         environment:
             - TZ="America/Chicago"
             - VERSION="latest"
             - PUID=1001
             - PGID=1001
-    radarr:
-        container_name: radarr
-        image: linuxserver/radarr
-        restart: unless-stopped
-        ports:
-            - "7878:7878"
-        volumes:
-            - /etc/localtime:/etc/localtime:ro
-            - ./plexServerConfig/radarr/config:/config
-            - ./plexServerConfig/downloads:/downloads
-            - /media/movies/Movies:/movies
-        environment:
-            - TZ="America/Chicago"
-            - PUID=1001
-            - PGID=1001
-    netdata:
-        container_name: netdata
-        image: titpetric/netdata:latest
-        restart: unless-stopped
-        cap_add:
-            - SYS_PTRACE
-        ports:
-            - "19999:19999"
-        volumes:
-            - /proc:/host/proc:ro
-            - /var/run/docker.sock:/var/run/docker.sock
     qbittorrent:
         container_name: qbittorrent
         image: linuxserver/qbittorrent:latest
@@ -61,70 +21,17 @@ services:
         ports:
            - "8080:8080"
         volumes:
-            - ./plexServerConfig/downloads:/downloads
-            - ./plexServerConfig/qbittorrent/config:/config
-            - /media/tv_shows:/tv_shows
+            - /home/plex/downloads:/downloads
+            - /home/plex/qbittorrent/config:/config
+            - /media/tvshows:/tv_shows
         environment:
             - TZ="America/Chicago"
             - PGID=1001
             - PUID=1001
-    sonarr:
-        container_name: sonarr
-        image: linuxserver/sonarr:latest
-        restart: unless-stopped
-        ports:
-            - "8989:8989"
-        volumes:
-            - /etc/localtime:/etc/localtime:ro
-            - ./plexServerConfig/sonarr:/config
-            - /media/tv_shows/Videos/Tv Shows:/tv
-            - ./plexServerConfig/downloads:/downloads
-        environment:
-            - TZ="America/Chicago"
-            - PGID=1001
-            - PUID=1001
-        depends_on:
-            - jackett
-    jackett:
-        container_name: jackett
-        image: linuxserver/jackett
-        restart: unless-stopped
-        ports:
-            - "9117:9117"
-        volumes:
-            - ./plexServerConfig/jackett/config:/home/jackett/.config/Jackett
-            - ./plexServerConfig/downloads:/downloads
-            - /etc/localtime:/etc/localtime:ro
-        environment:
-            - TZ="America/Chicago"
-            - PGID=1001
-            - PUID=1001
-    plexpy:
-        container_name: plexpy
-        image: linuxserver/plexpy:latest
-        restart: unless-stopped
-        ports:
-            - "8181:8181"
-        volumes:
-            - ./plexServerConfig/plexpy/config:/config
-            - ./plexServerConfig/plexpy/logs/:/logs:ro
-        environment:
-            - TZ="America/Chicago"
-            - PGID=1001
-            - PUID=1001
-    emby:
-       container_name: emby
-       image: emby/embyserver
-       volumes:
-            - ./plexServerConfig/emby/config:/config
-            - /media/tv_shows/Videos/Tv Shows:/tv
-            - /media/movies/Movies:/movies
-       ports:
-            - 8096:8096
-            - 8920:8920
-            - 7359:7359/udp
-            - 9900:1900/udp
-       environment:
-            - APP_UID=1001
-            - APP_GID=1001
-            - TZ="America/Chicago"
+    factorio:
+      image: dtandersen/factorio
+      ports:
+       - "34197:34197/udp"
+       - "27015:27015/tcp"
+      volumes:
+       - /home/plex/factorio:/factorio
