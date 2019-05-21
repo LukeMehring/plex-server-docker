@@ -1,19 +1,19 @@
 version: '3'
 services:
-    plex:
-        container_name: plex
-        image: linuxserver/plex
-        restart: unless-stopped
-        network_mode: host
-        volumes:
-            - /home/plex/plexmediaserver/config:/config
-            - "/media/tvshows/Videos/Tv Shows:/data/tvshows"
-            - /media/movies/Movies:/data/movies
-        environment:
-            - TZ="America/Chicago"
-            - VERSION="latest"
-            - PUID=1001
-            - PGID=1001
+#     plex:
+#         container_name: plex
+#         image: linuxserver/plex
+#         restart: unless-stopped
+#         network_mode: host
+#         volumes:
+#             - /home/plex/plexmediaserver/config:/config
+#             - "/media/tvshows/Videos/Tv Shows:/data/tvshows"
+#             - /media/movies/Movies:/data/movies
+#         environment:
+#             - TZ="America/Chicago"
+#             - VERSION="latest"
+#             - PUID=1001
+#             - PGID=1001
     qbittorrent:
         container_name: qbittorrent
         image: linuxserver/qbittorrent:latest
