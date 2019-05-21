@@ -28,10 +28,10 @@ services:
             - TZ="America/Chicago"
             - PGID=1001
             - PUID=1001
-    factorio:
-      image: dtandersen/factorio
-      ports:
-       - "34197:34197/udp"
-       - "27015:27015/tcp"
-      volumes:
-       - /home/plex/factorio:/factorio
+#     factorio:
+#       image: dtandersen/factorio
+#       ports:
+#        - "34197:34197/udp"
+#        - "27015:27015/tcp"
+#       volumes:
+#        - /home/plex/factorio:/factorio
